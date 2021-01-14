@@ -1,2 +1,30 @@
 # pixelrb
-file uploading script powered on pixeldrain
+file uploading script powered by [pixeldrain](https://pixeldrain.com/).
+
+## Intro
+upload your files via command line to the cloud.
+
+### Benefits of pixeldrain
+
+- mostly free
+- authentication not required 
+- secure
+- fast
+
+### Installation
+``` 
+git clone https://github.com/polarspetroll/pixelrb.git && cd pixelrb
+
+chmod +x install.sh
+
+```
+### Usage
+
+```
+pixelrb PATH_TO_FILE
+
+EXAMPLE :
+
+pixelrb image.jpeg
+
+```
