@@ -1,0 +1,27 @@
+#!/usr/bin/ruby
+require 'json'
+require 'rest-client'
+require 'colorize'
+path = ARGV[0]
+
+if path == nil
+  abort "usage :
+
+  pixelrb FILE_PATH
+  author : github.com/polarspetroll".light_cyan
+end
+
+upload = File.new(path)
+puts "\nuploading your file. please be patient.\n".light_blue
+request = RestClient.post 'https://pixeldrain.com/api/file', {file: upload}
+replydata = JSON.parse(request.body)
+file_id = replydata["id"]
+respond_code = request.code
+
+if respond_code == 201
+  puts "Done!\n".green
+else
+  puts replydata["message"]
+end
+
+puts "file url: https://pixeldrain.com/u/#{file_id}".light_green
