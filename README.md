@@ -25,6 +25,8 @@ pixelrb PATH_TO_FILE
 
 EXAMPLE :
 
-pixelrb image.jpeg
+pixelrb image1.jpeg image2.jpeg document.pdf notes.txt
 
 ```
+#### Update
+- added future : upload multiple files.
