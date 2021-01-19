@@ -17,6 +17,8 @@ git clone https://github.com/polarspetroll/pixelrb.git && cd pixelrb
 
 chmod +x install.sh
 
+./install.sh
+
 ```
 ### Usage
 
