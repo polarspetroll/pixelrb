@@ -2,25 +2,26 @@
 require 'json'
 require 'rest-client'
 require 'colorize'
-path = ARGV[0]
 
-if path == nil
+inputs = ARGV
+if inputs[0] == nil || inputs[0] == "-h"
   abort "usage :
 
   pixelrb FILE_PATH
   author : github.com/polarspetroll".light_cyan
 end
 
-upload = File.new(path)
-puts "\nuploading your file. please be patient.\n".light_blue
-request = RestClient.post 'https://pixeldrain.com/api/file', {file: upload}
-replydata = JSON.parse(request.body)
-file_id = replydata["id"]
+filecount = (inputs.length - 1)
 
-if request.code == 201
-  puts "Done!\n".green
-else
-  abort replydata["message"]
+for n in 0..filecount
+  upload = File.new(inputs[n])
+  puts "\nUploading #{inputs[n]}...".light_cyan
+  request = RestClient.post 'https://pixeldrain.com/api/file', {file: upload}
+  replydata = JSON.parse(request.body)
+  if request.code == 201
+    puts "Done!".green
+  else
+    abort replydata["message"].light_red
+  end
+  puts "#{inputs[n]} : https://pixeldrain.com/u/#{replydata["id"]}".light_green.bold
 end
-
-puts "file url: https://pixeldrain.com/u/#{file_id}".light_green
