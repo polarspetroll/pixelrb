@@ -30,5 +30,4 @@ EXAMPLE :
 pixelrb image1.jpeg image2.jpeg document.pdf notes.txt
 
 ```
-#### Update
-- added future : upload multiple files.
+
