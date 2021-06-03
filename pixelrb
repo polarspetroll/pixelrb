@@ -1,19 +1,22 @@
 #!/usr/bin/ruby
+begin
 require 'json'
 require 'rest-client'
 require 'colorize'
+rescue LoadError => err
+  abort err.to_s
+rescue Interrupt 
+  abort "\nInterrupted"
+end
 
 inputs = ARGV
-if inputs[0] == nil || inputs[0] == "-h"
-  abort "usage :
-
-  pixelrb FILE_PATH
-  author : github.com/polarspetroll".light_cyan
+if inputs.length == 0 || inputs[0] == "-h" || inputs[0] == "--help"
+  abort "Usage :\n\npixelrb [FILES]".cyan
 end
 
 filecount = (inputs.length - 1)
-
 for n in 0..filecount
+  begin
   upload = File.new(inputs[n])
   puts "\nUploading #{inputs[n]}...".light_cyan
   request = RestClient.post 'https://pixeldrain.com/api/file', {file: upload}
@@ -24,4 +27,13 @@ for n in 0..filecount
     abort replydata["message"].light_red
   end
   puts "#{inputs[n]} : https://pixeldrain.com/u/#{replydata["id"]}".light_green.bold
+rescue Errno::ENOENT 
+  abort "#{inputs[n]} No such file or directory".red.bold
+rescue SocketError => err
+  abort err.to_s.red.bold
+rescue Errno::EISDIR
+  abort "#{inputs[n]} Is a directory".red.bold
+rescue Interrupt
+  abort "\n\nInterrupted".yellow
+end
 end
